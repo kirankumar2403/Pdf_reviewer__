@@ -27,10 +27,7 @@
     {
       "src": "/invoices/(.*)",
       "dest": "apps/api/index.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "apps/web/$1"
     }
+ 
   ]
 }
