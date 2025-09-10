@@ -299,7 +299,7 @@ export default function InvoicesPage() {
                           <span className="font-medium">Date:</span> {formatDate(invoice.invoice.date)}
                         </div>
                         <div>
-                          <span className="font-medium">Total:</span> {formatCurrency(invoice.invoice.total)}
+                          <span className="font-medium">Total:</span> {formatCurrency(invoice.invoice.total?? 0)}
                         </div>
                         <div>
                           <span className="font-medium">File:</span> {invoice.fileName}
