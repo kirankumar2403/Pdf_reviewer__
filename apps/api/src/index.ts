@@ -18,12 +18,12 @@ import { seedDatabase } from './utils/seedDatabase'
 dotenv.config()
 
 const app = express()
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 
 // Middleware
 app.use(helmet())
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: process.env.FRONTEND_URL || 'https://pdf-reviewer-web.vercel.app/',
   credentials: true,
 }))
 app.use(morgan('combined'))

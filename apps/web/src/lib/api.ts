@@ -8,7 +8,7 @@ import type {
   SearchParams 
 } from '@pdf-dashboard/types'
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001'
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'https://pdf-reviewer-api.vercel.app/'
 
 export const api = axios.create({
   baseURL: API_BASE,
