@@ -1,3 +1,3 @@
-const app = require('../dist/index.js').default || require('../dist/index.js')
+const app = require('../src/index.ts').default || require('../src/index.ts')
 
 module.exports = app
