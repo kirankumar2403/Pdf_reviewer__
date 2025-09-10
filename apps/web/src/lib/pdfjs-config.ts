@@ -8,7 +8,8 @@ export function configurePdfJs(): void {
   try {
     // Set the worker source
     // @ts-ignore
-    pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.js`;
+
 
     isConfigured = true;
 
