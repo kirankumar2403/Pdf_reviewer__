@@ -22,15 +22,12 @@ const PORT = process.env.PORT
 
 // Middleware
 app.use(helmet())
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_URL || 'https://pdf-reviewer-web.vercel.app');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  if (req.method === 'OPTIONS') return res.sendStatus(200);
-  next();
-});
-
+app.use(cors({
+  origin: ['https://pdf-reviewer-web.vercel.app'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}))
 app.use(morgan('combined'))
 app.use(express.json({ limit: '50mb' }))
 app.use(express.urlencoded({ extended: true, limit: '50mb' }))
@@ -82,12 +79,11 @@ async function startServer() {
   await connectDB()
   
   app.listen(PORT, () => {
-    console.log(`🚀 API Server running on port ${PORT}`)
-    console.log(`📚 Health check: http://localhost:${PORT}/health`)
+    console.log(`📚 Health check: https://pdf-reviewer-api.vercel.app/health`)
     console.log(`📋 API endpoints:`)
-    console.log(`   POST http://localhost:${PORT}/upload`)
-    console.log(`   POST http://localhost:${PORT}/extract`)
-    console.log(`   GET  http://localhost:${PORT}/invoices`)
+    console.log(`   POST https://pdf-reviewer-api.vercel.app/upload`)
+    console.log(`   POST https://pdf-reviewer-api.vercel.app/extract`)
+    console.log(`   GET  https://pdf-reviewer-api.vercel.app/invoices`)
   })
 }
 
