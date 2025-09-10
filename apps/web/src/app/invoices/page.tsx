@@ -326,7 +326,8 @@ export default function InvoicesPage() {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => handleEdit(invoice._id)}
+                      onClick={() => invoice._id && handleEdit(invoice._id)}
+
                     >
                       <Edit className="h-4 w-4 mr-1" />
                       Edit
@@ -334,7 +335,7 @@ export default function InvoicesPage() {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => handleDelete(invoice._id)}
+                      onClick={() => invoice._id && handleDelete(invoice._id)}
                       className="text-destructive hover:text-destructive"
                     >
                       <Trash2 className="h-4 w-4 mr-1" />
