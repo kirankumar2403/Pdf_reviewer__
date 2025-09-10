@@ -23,7 +23,7 @@ const PORT = process.env.PORT
 // Middleware
 app.use(helmet())
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'https://pdf-reviewer-web.vercel.app/',
+  origin: process.env.FRONTEND_URL || 'https://pdf-reviewer-web.vercel.app',
   credentials: true,
 }))
 app.use(morgan('combined'))
