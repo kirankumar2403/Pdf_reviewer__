@@ -318,7 +318,7 @@ export default function InvoicesPage() {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => handleView(invoice._id)}
+                      onClick={() => invoice._id && handleView(invoice._id)}
                     >
                       <Eye className="h-4 w-4 mr-1" />
                       View
