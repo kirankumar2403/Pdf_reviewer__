@@ -23,16 +23,11 @@ export function configurePdfJs(): void {
   try {
     // Set the worker source - use CDN for reliability
     // @ts-ignore - PDF.js global options shape
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
-
-    // Configure standard font data URL to fix baseUrl warnings
-    const standardFontDataUrl = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/standard_fonts/`;
-    
+    pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
     // @ts-ignore - PDF.js global options shape
     //pdfjsLib.GlobalWorkerOptions.standardFontDataUrl = standardFontDataUrl;
 
-    // Mark as configured
-    isConfigured = true;
+    
 
     console.log('PDF.js configured successfully', {
       version: pdfjsLib.version,
