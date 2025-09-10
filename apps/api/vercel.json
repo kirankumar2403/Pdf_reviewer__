@@ -1,18 +1,30 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "dist/index.js",
-      "use": "@vercel/node"
+  "functions": {
+    "api/*.js": {
+      "runtime": "nodejs18.x"
     }
-  ],
+  },
   "routes": [
     {
+      "src": "/health",
+      "dest": "/api/index"
+    },
+    {
+      "src": "/upload/(.*)",
+      "dest": "/api/index"
+    },
+    {
+      "src": "/extract/(.*)",
+      "dest": "/api/index"
+    },
+    {
+      "src": "/invoices/(.*)",
+      "dest": "/api/index"
+    },
+    {
       "src": "/(.*)",
-      "dest": "dist/index.js"
+      "dest": "/api/index"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  ]
 }

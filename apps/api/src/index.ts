@@ -18,6 +18,11 @@ import { seedDatabase } from './utils/seedDatabase'
 dotenv.config()
 
 const app = express()
+const PORT = process.env.PORT
+
+// Database connection state
+let isDatabaseConnected = false
+
 // Middleware
 app.use(helmet())
 app.use(cors({
@@ -46,6 +51,18 @@ app.options('*', (req, res) => {
   res.sendStatus(200)
 })
 
+// Database middleware for routes that need DB
+const requireDatabase = (req: any, res: any, next: any) => {
+  if (!isDatabaseConnected && mongoose.connection.readyState !== 1) {
+    return res.status(503).json({
+      success: false,
+      error: 'Database connection unavailable',
+      message: 'The database is currently unavailable. Please try again later.'
+    })
+  }
+  next()
+}
+
 // API routes
 app.use('/upload', uploadRoutes)
 app.use('/extract', extractRoutes)
@@ -63,8 +80,6 @@ app.use('*', (req, res) => {
 })
 
 // Database connection
-let isDatabaseConnected = false
-
 async function connectDB() {
   try {
     const MONGODB_URI = process.env.MONGODB_URI
@@ -87,28 +102,20 @@ async function connectDB() {
   }
 }
 
-// API routes
-// Database middleware for routes that need DB
-const requireDatabase = (req: any, res: any, next: any) => {
-  if (!isDatabaseConnected && mongoose.connection.readyState !== 1) {
-    return res.status(503).json({
-      success: false,
-      error: 'Database connection unavailable',
-      message: 'The database is currently unavailable. Please try again later.'
-    })
-  }
-  next()
-}
-async function startServer() {
-  await connectDB()
-  
+// Initialize database connection
+connectDB().catch(console.error)
+
+// Export the Express app for Vercel serverless functions
+export default app
+
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3001
   app.listen(PORT, () => {
-    console.log(`📚 Health check: https://pdf-reviewer-api.vercel.app/health`)
+    console.log(`📚 Health check: http://localhost:${PORT}/health`)
     console.log(`📋 API endpoints:`)
-    console.log(`   POST https://pdf-reviewer-api.vercel.app/upload`)
-    console.log(`   POST https://pdf-reviewer-api.vercel.app/extract`)
-    console.log(`   GET  https://pdf-reviewer-api.vercel.app/invoices`)
+    console.log(`   POST http://localhost:${PORT}/upload`)
+    console.log(`   POST http://localhost:${PORT}/extract`)
+    console.log(`   GET  http://localhost:${PORT}/invoices`)
   })
 }
-
-startServer().catch(console.error)
