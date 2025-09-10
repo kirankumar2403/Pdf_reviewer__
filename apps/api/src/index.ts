@@ -23,10 +23,12 @@ const PORT = process.env.PORT
 // Middleware
 app.use(helmet())
 app.use(cors({
-  origin: ['https://pdf-reviewer-web.vercel.app'],
+  origin: ['https://pdf-reviewer-web.vercel.app','http://localhost:3000'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+  preflightContinue: false,
+  optionsSuccessStatus: 200
 }))
 app.use(morgan('combined'))
 app.use(express.json({ limit: '50mb' }))
@@ -36,11 +38,17 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }))
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() })
 })
-
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', 'https://pdf-reviewer-web.vercel.app')
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Accept, Origin, X-Requested-With')
+  res.header('Access-Control-Allow-Credentials', 'true')
+  res.sendStatus(200)
+})
 // API routes
-app.use('/upload',cors(), uploadRoutes)
-app.use('/extract',cors(), extractRoutes)
-app.use('/invoices',cors(), invoiceRoutes)
+app.use('/upload', uploadRoutes)
+app.use('/extract', extractRoutes)
+app.use('/invoices', invoiceRoutes)
 
 // Error handling middleware
 app.use(errorHandler)
