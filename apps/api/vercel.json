@@ -14,20 +14,20 @@
   "routes": [
     {
       "src": "/health",
-      "dest": "apps/src/index.ts"
+      "dest": "apps/api/index.js"
     },
     {
       "src": "/upload/(.*)",
-      "dest": "apps/src/index.ts"
+      "dest": "apps/api/index.js"
     },
     {
       "src": "/extract/(.*)",
-      "dest": "apps/src/index.ts"
+      "dest": "apps/api/index.js"
     },
     {
       "src": "/invoices/(.*)",
-      "dest": "apps/src/index.ts"
+      "dest": "apps/api/index.js"
     }
- 
   ]
+  
 }
