@@ -29,7 +29,7 @@ export function configurePdfJs(): void {
     const standardFontDataUrl = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/standard_fonts/`;
     
     // @ts-ignore - PDF.js global options shape
-    pdfjsLib.GlobalWorkerOptions.standardFontDataUrl = standardFontDataUrl;
+    //pdfjsLib.GlobalWorkerOptions.standardFontDataUrl = standardFontDataUrl;
 
     // Mark as configured
     isConfigured = true;
